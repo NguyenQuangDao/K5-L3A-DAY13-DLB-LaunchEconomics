@@ -53,7 +53,7 @@ Cách tiếp cận:
 
 | Thành viên | Vai | Đóng góp chính | Bằng chứng |
 | --- | --- | --- | --- |
-| Nguyễn Vũ Thành Long | Người viết code (CP1, CP4), hoàn thiện code CP2 | A1–A4 trong `lab13.py`; hoàn thiện B1–B4 và thống nhất B4; D1 và hàm kiểm tra `pilot_plan.yaml` trong code; hoàn thiện `pilot_plan.yaml` (D1, D2, 5 luật dừng) | Commit `71e2be4`, `31bd49c`, `f531cc7`, `49ff94f` |
+| Nguyễn Vũ Thành Long | Người viết code (CP1, CP4), hoàn thiện code CP2 | A1–A4 trong `lab13.py`; hoàn thiện B1–B4 và thống nhất B4; D1 và hàm kiểm tra `pilot_plan.yaml` trong code; hoàn thiện `pilot_plan.yaml` (D1, D2, 5 luật dừng) | Commit `71e2be4`, `31bd49c`, `f531cc7`, `49ff94f`; `2A202603635_NguyenVuThanhLong.md` |
 | Nguyễn Quang Đạo | Người viết code CP2, người gắn nhãn 1, kiểm số CP1 | Code B1–B4 bản đầu; bản nháp đầu các file hồ sơ; bộ nhãn 1 (20 ca độc lập) | Commit `5fe928c`, `d3206b5`; `TEAM.md` (kiểm số CP1); `2A202603614_NguyenQuangDao.md` |
 | Nguyễn Gia Bảo | Người gắn nhãn 2 kiêm giữ hồ sơ, kiểm số | Hồ sơ launch v0 bảy mục; bộ nhãn 2 và bảng lỗi; `chi_so.md`, E1 trong `lab13.py` | PR #3, #4, #8; `2A202603647_NguyenGiaBao.md` (PR #6) |
 
