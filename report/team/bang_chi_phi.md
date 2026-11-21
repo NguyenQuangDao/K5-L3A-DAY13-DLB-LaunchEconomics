@@ -1,8 +1,20 @@
 # BẢNG CHI PHÍ - Lab 13 LaunchEconomics
 
 **Nhóm:** DLB  
-**Người phụ trách:** Nguyễn Quang Đạo - 2A202603614 (Viết bảng), Nguyễn Gia Bảo - 2A202603647 (Kiểm số)
-**Nhiệm vụ:** A2, A3, B1-B4
+**Người phụ trách:** Nguyễn Quang Đạo - 2A202603614 (Viết bảng), Nguyễn Gia Bảo - 2A202603647 (Kiểm số)  
+**Nhiệm vụ:** A1-A4 (CP1), B1-B4 (CP2)
+
+Số tính bằng `src/lab13.py` (chạy `cd src && python lab13.py`). Mọi con số tính từ cột `_simulated` ghi nhãn **simulated**.
+
+---
+
+## A1 · Ba phép thử đáp án biết trước
+
+| Phép thử (p = 0,8) | Kết quả của nhóm |
+| --- | --- |
+| Số lần chạy trung bình, tối đa 2 lần | 1,20 · ĐẠT |
+| Số lần chạy trung bình, chạy đến khi đúng | 1,25 · ĐẠT |
+| Hệ số chi phí mỗi việc thành công, tối đa 3 lần | 1,25 · ĐẠT (bằng 1/p vì k triệt tiêu) |
 
 ---
 
@@ -72,71 +84,60 @@ Chi phí mỗi việc thành công trong phạm vi (chưa cộng cố định): 
 
 ---
 
-## B1 · Bảng độ nhạy (đổi từng yếu tố)
+## B1 · Đổi từng yếu tố [simulated]
 
-| Kịch bản | Chi phí mỗi việc thành công [sim] | Thay đổi |
-|----------|-----------------------------------|----------|
-| Gốc (A2) | 4,472 đ | - |
-| Giá token gấp đôi | 4,723 đ | +5.6% |
-| Giá token giảm một nửa | 4,346 đ | -2.8% |
-| Xem lại gấp đôi | 6,292 đ | +40.7% |
-| Xem lại giảm một nửa | 3,562 đ | -20.3% |
-| Làm lại gấp đôi | 6,787 đ | +51.8% |
-| Làm lại giảm một nửa | 3,315 đ | -25.9% |
-| Lương tăng 25% | 5,506 đ | +23.1% |
-| Tối đa 2 lần chạy | 4,237 đ | -5.2% |
-| Chỉ 1 lần chạy | 4,111 đ | -8.1% |
+Mỗi kịch bản là một lần gọi `mo_hinh(runs, reqs, ...)` trong `src/lab13.py` với đúng một tham số đổi. Gốc (A2) = 4,472 đ mỗi việc thành công [simulated].
 
-### Xếp hạng 3 yếu tố ảnh hưởng mạnh nhất
+| Kịch bản | Cách tính | Chi phí mỗi việc thành công [simulated] | Thay đổi (%) |
+| --- | --- | ---: | ---: |
+| Giá token gấp đôi | 52 đ và 260 đ cho 1,000 token; giá tool giữ nguyên | 4,723 đ | +5.6% |
+| Giá token giảm một nửa | 13 đ và 65 đ | 4,346 đ | -2.8% |
+| Tỉ lệ xem lại gấp đôi | Tiền xem lại × 2 | 6,292 đ | +40.7% |
+| Tỉ lệ xem lại giảm một nửa | Tiền xem lại ÷ 2 | 3,562 đ | -20.3% |
+| Số ca làm lại gấp đôi | Tiền làm lại × 2 | 6,787 đ | +51.8% |
+| Số ca làm lại giảm một nửa | Tiền làm lại ÷ 2 | 3,315 đ | -25.9% |
+| Lương nhân viên tăng 25% | 2,500 đ mỗi phút | 5,506 đ | +23.1% |
+| Chỉ cho chạy tối đa 2 lần | Bỏ lần chạy có attempt > 2; yêu cầu có so_lan_chay > 2 coi là chuyen_nhan_vien (0 phút xem lại, làm lại) | 4,237 đ | -5.2% |
+| Chỉ cho chạy 1 lần | Như trên với giới hạn 1 | 4,111 đ | -8.1% |
 
-1. **Số ca làm lại** (51.8%)
-2. **Tỉ lệ xem lại** (40.7%)
-3. **Lương nhân viên** (23.1%)
+Tự kiểm tra (code in `ĐẠT`): mỗi dòng "giảm một nửa" bằng đúng nửa mức tăng của dòng "gấp đôi" (5.6 → 2.8; 40.7 → 20.3; 51.8 → 25.9), vì mô hình cộng tuyến tính.
 
----
+## B2 · Đổi một cặp và xếp hạng [simulated]
 
-## B2 · Đổi một cặp và xếp hạng
+- Giá token gấp đôi cùng lúc tỉ lệ xem lại gấp đôi: **6,543 đ (+46.3%)**, đúng bằng 5.6% + 40.7% vì mô hình cộng tuyến tính.
+- Xếp hạng ba yếu tố ảnh hưởng mạnh nhất: **1. số ca làm lại (+51.8%) · 2. tỉ lệ xem lại (+40.7%) · 3. lương nhân viên (+23.1%)**; giá token chỉ +5.6%.
+- Pilot phải theo dõi tỉ lệ làm lại và tỉ lệ xem lại, không phải giá token.
 
-Giá token gấp đôi + xem lại gấp đôi: **6,543 đ (+46.3%)**, đúng bằng tổng hai tác động riêng vì mô hình cộng tuyến tính.
+## B3 · Giới hạn chạy lại có thật sự rẻ hơn [simulated]
 
-**Xếp hạng:** 1. số ca làm lại · 2. tỉ lệ xem lại · 3. lương nhân viên.
+Chi phí cả hệ thống = tổng chi phí trợ lý + 12,000 đ × số yêu cầu không thành công (nhân viên phải làm thay).
 
----
-
-## B3 · Giới hạn chạy lại có thật sự rẻ hơn? [simulated]
-
-Chi phí cả hệ thống = tổng chi phí trợ lý + 12,000 đ × số yêu cầu không thành công.
-
-| Giới hạn | Tổng trợ lý [sim] | Không thành công | Cả hệ thống | Chi phí mỗi việc thành công |
-|----------|------------------|------------------|-------------|----------------------------|
+| Giới hạn | Tổng chi phí trợ lý | Số yêu cầu không thành công | Chi phí cả hệ thống | Chi phí mỗi việc thành công |
+| --- | ---: | ---: | ---: | ---: |
 | 1 lần | 3,621,781 đ | 319 | 7,449,781 đ | 4,111 đ (thấp nhất) |
 | 2 lần | 4,093,220 đ | 234 | **6,901,220 đ (rẻ nhất)** | 4,237 đ |
 | 3 lần | 4,373,585 đ | 222 | 7,037,585 đ | 4,472 đ |
 
-- Giới hạn **2 lần rẻ nhất cho công ty** (6.9 triệu đ).
-- Không trùng với giới hạn cho cps thấp nhất (1 lần: 4,111 đ).
-- Tối ưu cps riêng sẽ đẩy thêm **85 việc** sang nhân viên.
-
----
+- Giới hạn **2 lần rẻ nhất cho công ty** (6,901,220 đ), rẻ hơn 3 lần 136,365 đ và rẻ hơn 1 lần 548,561 đ [simulated].
+- **Không trùng** với giới hạn cho chi phí mỗi việc thành công thấp nhất (1 lần, 4,111 đ).
+- Tối ưu riêng chi phí mỗi việc thành công sẽ đẩy thêm **85 việc** (319 − 234) sang nhân viên.
 
 ## B4 · Nếu phải xem lại tất cả [simulated]
 
-Chỉ lấy noi_dia + hang_nang (982 yêu cầu):
+Phạm vi `noi_dia` + `hang_nang` (982 yêu cầu, 900 việc thành công):
 
-1. Yêu cầu có ít nhất một lần chạy ok: **948**, mỗi yêu cầu xem lại 5 phút → **9,480,000 đ**.
-2. Số ca lam_lai: **48**, mỗi ca làm lại 9 phút → **864,000 đ**.
-3. Token + tool của 982 yêu cầu: **224,513 đ**.
-4. Tổng: **10,568,513 đ**, chia cho **900** việc thành công → **11,743 đ = 0.98×** của 12,000 đ.
+| Bước | Cách tính | Số tiền |
+| --- | --- | ---: |
+| Xem lại | 948 yêu cầu có ít nhất một lần chạy ok × 5 phút × 2,000 đ | 9,480,000 đ |
+| Làm lại (đề: 9 phút/ca) | 48 ca lam_lai × 9 phút × 2,000 đ | 864,000 đ |
+| Làm lại (dữ liệu: 15.3 phút/ca) | 48 × 15.3 × 2,000 đ | 1,468,800 đ |
+| Token + tool | mọi lần chạy của 982 yêu cầu | 224,513 đ |
+| **Tổng, làm lại 9 phút** | ÷ 900 việc thành công | 10,568,513 đ → **11,743 đ = 0.98×** |
+| **Tổng, làm lại 15.3 phút** | ÷ 900 việc thành công | 11,173,313 đ → **12,415 đ = 1.03×** |
 
-### Độ nhạy theo phút làm lại
-
-Cột `phut_lam_lai_simulated` trung bình **15.3 phút/ca** (trung vị 14.5). Thay 9 bằng 15.3:
-
-48 × 15.3 × 2,000 = 1,468,800 đ → tổng **11,173,313 đ** → **12,414 đ = 1.03×** [simulated].
-
-- **Mức hoà vốn:** mỗi lần xem lại phải ≤ 5.1 phút (với 9 phút làm lại) hoặc ≤ 4.8 phút (với 15.3 phút).
-- Xem lại 100% thì trợ lý gần như không tiết kiệm được gì (chi phí xem lại chiếm 90%).
-- Pilot phải học được tỉ lệ xem lại có thể giảm an toàn xuống mức nào.
+- Xem lại 100% thì chi phí mỗi việc thành công là **11,743 đ = 0.98×** của 12,000 đ [simulated]; nếu làm lại đúng như dữ liệu (15.3 phút, trung vị 14.5) thì **12,415 đ = 1.03×**, tức đắt hơn nhân viên tự làm.
+- Mức hoà vốn: mỗi lần xem lại phải ≤ **5.1 phút** (làm lại 9 phút) hoặc ≤ **4.8 phút** (làm lại 15.3 phút), trong khi đề cho 5 phút.
+- Xem lại chiếm khoảng 90% chi phí, nên pilot phải học được tỉ lệ xem lại có thể giảm an toàn xuống mức nào và mỗi lần xem lại có ngắn hơn 5 phút được không.
 
 ---
 
