@@ -41,7 +41,7 @@ Cách tiếp cận:
   - Giám đốc vận hành xác nhận đủ 40 nhân viên đủ điều kiện trước 2027-01-05 (dữ liệu chạy thử chỉ có 20 staff_id ở 6 depot).
   - Luật "cao hơn đối chứng ≥ 2 điểm" chỉ áp dụng từ bước 0.25; bước 0.10 (4 nhân viên) chỉ dùng luật tuyệt đối · PM trợ lý hoàn phí · sửa `pilot_plan.yaml` trước 2027-01-05.
   - Ghi chú không trừ điểm: trang hồ sơ dài, mục 6 nên rút gọn.
-  - **Câu hỏi:** nếu chỉ có 20 người đủ điều kiện thì chia thế nào, phát hiện được bao nhiêu điểm, còn Go có điều kiện không? **Nhóm trả lời:** chia 10 + 10, bốc thăm trong từng depot nếu đủ người; trần 500 yêu cầu hiệu dụng mỗi bên < 859 cần cho 6 điểm; mức nhỏ nhất đạt power 80% là 8 điểm (ít nhất 796 yêu cầu mỗi người), power chỉ khoảng 41% nếu tác động thật là 5 điểm. Vì vậy nếu chỉ có 20 người thì No-go cho pilot đo tác động; Giám đốc vận hành xác nhận số người trước 05/01/2027; đủ 40 người thì quay lại Gate 2a.
+  - **Câu hỏi:** nếu chỉ có 20 người đủ điều kiện thì chia thế nào, phát hiện được bao nhiêu điểm, còn Go có điều kiện không? **Nhóm trả lời:** chia 10 + 10, bốc thăm trong từng depot nếu đủ người; trần 500 yêu cầu hiệu dụng mỗi bên < 859 cần cho 6 điểm; trong các mức chênh nguyên, 8 điểm phần trăm là mức nhỏ nhất đạt power khoảng 80% ở phương án 796 yêu cầu mỗi người; với cỡ mẫu đó, power chỉ khoảng 41% nếu tác động thật là 5 điểm. Vì vậy nếu chỉ có 20 người thì No-go cho pilot đo tác động; Giám đốc vận hành xác nhận số người trước 05/01/2027; đủ 40 người thì quay lại Gate 2a.
 - **Nhóm chấm nhóm PD:** 30/30, Go có điều kiện (`phieu_cham.md`).
 
 ## 5. Khó khăn và cách xử lý
