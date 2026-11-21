@@ -77,5 +77,28 @@ Sao chép mục dưới đây cho từng thành viên.
 ### Bằng chứng
 
 - report/team/bang_chi_phi.md có đầy đủ bảng B1-B4
-- report/team/bang_loi.md có hai bộ nhãn, tỉ lệ đồng thuận 100%
+- report/team/bang_loi.md có hai bộ nhãn, tỉ lệ đồng thuận 19/20 = 95% (ca 13 lệch, thống nhất Giới hạn hệ thống; PR #4)
 - Bảng khắc phục 5 ca (mỗi loại 1 ca)
+
+## NguyễnGiaBảo-2A202603647
+
+### Phần việc phụ trách
+
+- Giữ hồ sơ: `report/team/ho_so_launch_v0.md` (bảy mục, đề xuất cuối)
+- CP3: Người gắn nhãn 2 (20 ca độc lập)
+- CP5: `report/team/chi_so.md`, E1 trong `src/lab13.py`; báo cáo nhóm
+- Kiểm số các số đưa vào hồ sơ (CP4, CP5)
+
+### Đóng góp cụ thể
+
+- Gộp hồ sơ launch v0 về mẫu một trang, bảy mục; sửa 0,37× [simulated] thành 0,49× [simulated] (cộng 222 yêu cầu nhân viên làm thay), bỏ câu "cao hơn baseline 0,70"; đề xuất Go có điều kiện kèm con số bất lợi (power 0,64; xem lại 100% → 0,98× [simulated] đến 1,03× [simulated])
+- Gắn nhãn 20 ca độc lập; so với bộ nhãn 1 được 19/20 = 95%; cùng người gắn nhãn 1 thống nhất ca 13 là Giới hạn hệ thống
+- Viết lại `chi_so.md`: E1 có cột công thức, 11 event có `trace_id`, 4 dòng rủi ro kinh tế; thêm hàm `chi_so_e1()` in 994/1.200 · 48/177 · 51/1.200
+- Sửa ngày đọc kết quả pilot thành 2027-02-11 (đủ cửa sổ mở lại 7 ngày) và luật hoàn trùng theo mã khoản hoàn (bắt được ca 20)
+- Viết `report/team/group_report.md`
+
+### Bằng chứng
+
+- PR #3 (hồ sơ), #4 (bảng lỗi), #6 (báo cáo cá nhân), #8 (CP5), #10 (báo cáo nhóm)
+- `report/team/ho_so_launch_v0.md`, `report/team/bang_loi.md` (cột "Nhãn người 2"), `report/team/chi_so.md`, `report/team/group_report.md`
+- Báo cáo cá nhân: `report/team/2A202603647_NguyenGiaBao.md`
