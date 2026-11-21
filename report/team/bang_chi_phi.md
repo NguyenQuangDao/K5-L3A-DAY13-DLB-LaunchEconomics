@@ -1,7 +1,7 @@
 # BẢNG CHI PHÍ - Lab 13 LaunchEconomics
 
 **Nhóm:** DLB  
-**Người phụ trách:** Nguyễn Quang Đạo - 2A202603614 (Viết bảng), Nguyễn Gia Bảo - 2A202603647 (Kiểm số)  
+**Người phụ trách:** Nguyễn Vũ Thành Long - 2A202603635 (Viết code A1-A4, B1-B4), Nguyễn Quang Đạo - 2A202603614 (Viết bảng B bản đầu, kiểm số CP1), Nguyễn Gia Bảo - 2A202603647 (Kiểm số)  
 **Nhiệm vụ:** A1-A4 (CP1), B1-B4 (CP2)
 
 Số tính bằng `src/lab13.py` (chạy `cd src && python lab13.py`). Mọi con số tính từ cột `_simulated` ghi nhãn **simulated**.
