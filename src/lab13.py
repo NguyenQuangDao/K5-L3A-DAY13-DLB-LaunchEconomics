@@ -4,6 +4,9 @@ Không cần khoá API. Điền các chỗ ghi VIẾT Ở ĐÂY (đánh dấu TO
 Bản gốc chưa sửa nằm ở lab13_starter.py.
 """
 import math
+import os
+import re
+from statistics import NormalDist
 import pandas as pd
 
 # Bảng giá GIẢ ĐỊNH của lab (không phải giá thật của nhà cung cấp nào)
@@ -206,6 +209,99 @@ def xem_lai_tat_ca(runs, reqs, phut_xem=5, phut_lam=9):
                 cps=tong / thanh_cong, so_voi_nv=tong / thanh_cong / BASELINE, hoa_von_phut_xem=hoa_von)
 
 
+# ---------- Nhiệm vụ D · Cỡ mẫu của pilot (D1) ----------
+# Cho sẵn: baseline 0,70; mục tiêu +5 điểm; alpha 0,05; power 0,8; ICC 0,02.
+BASELINE_CHINH = 0.70
+ICC = 0.02
+DUONG_DAN_PILOT_PLAN = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                    '..', 'report', 'team', 'pilot_plan.yaml')
+
+
+def co_mau(p1, p2, alpha=0.05, power=0.8):
+    """Cỡ mẫu mỗi nhóm khi so hai tỉ lệ (chia theo yêu cầu, chưa tính hiệu ứng cụm)."""
+    za, zb = NormalDist().inv_cdf(1 - alpha / 2), NormalDist().inv_cdf(power)
+    pb = (p1 + p2) / 2
+    return math.ceil((za * math.sqrt(2 * pb * (1 - pb))
+                      + zb * math.sqrt(p1 * (1 - p1) + p2 * (1 - p2))) ** 2 / (p2 - p1) ** 2)
+
+
+def he_so_thiet_ke(m, icc=ICC):
+    """DE = 1 + (m - 1) × ICC, m = số yêu cầu mỗi cụm (mỗi nhân viên hoặc mỗi depot)."""
+    return 1 + (m - 1) * icc
+
+
+def so_yc_moi_cum_toi_thieu(n_can, so_cum, icc=ICC):
+    """Giải  so_cum × m / (1 + (m - 1) × icc) >= n_can  → m >= n_can (1 - icc) / (so_cum - n_can × icc).
+    Chỉ có nghiệm khi n_can < so_cum / icc (cỡ mẫu hiệu dụng luôn nhỏ hơn c / ICC)."""
+    if n_can >= so_cum / icc:
+        return None
+    return math.ceil(n_can * (1 - icc) / (so_cum - n_can * icc))
+
+
+def power_muc_5_diem(n_moi_nhom):
+    """Power thực sự nếu tác động thật chỉ là 5 điểm (0,70 → 0,75) trong khi cỡ mẫu tính cho 6 điểm."""
+    from statsmodels.stats.proportion import proportion_effectsize
+    from statsmodels.stats.power import NormalIndPower
+    h = proportion_effectsize(BASELINE_CHINH + 0.05, BASELINE_CHINH)
+    return NormalIndPower().power(effect_size=h, nobs1=n_moi_nhom, alpha=0.05, ratio=1.0)
+
+
+def cau_d1():
+    """Năm câu D1. Mọi số trong pilot_plan.yaml lấy từ đây."""
+    a = co_mau(BASELINE_CHINH, BASELINE_CHINH + 0.05)
+    m_b = 75
+    de_b = he_so_thiet_ke(m_b)
+    n_b = math.ceil(a * de_b)
+    n6 = co_mau(BASELINE_CHINH, BASELINE_CHINH + 0.06)      # mức chênh 6 điểm
+    m_e = so_yc_moi_cum_toi_thieu(n6, 20)
+    return dict(
+        a_theo_yc=a,
+        b_de=de_b, b_n=n_b, b_nguoi_moi_nhom=math.ceil(n_b / m_b), b_tong_nguoi=2 * math.ceil(n_b / m_b),
+        c_toi_da=20 / ICC, c_dat=20 / ICC >= a,
+        d_toi_da=6 / ICC, d_dat=6 / ICC >= a,
+        e_n6=n6, e_m=m_e, e_de=he_so_thiet_ke(m_e), e_power_5_diem=power_muc_5_diem(n6))
+
+
+def ti_le_mo_lai_hien_tai(reqs):
+    """Tính TRƯỚC khi đặt ngưỡng an toàn: đợt chạy thử đang ở mức nào."""
+    pv = reqs[reqs['loai'].isin(['noi_dia', 'hang_nang'])]
+    return dict(toan_mau=reqs['mo_lai_trong_7_ngay'].mean(), pham_vi=pv['mo_lai_trong_7_ngay'].mean(),
+                chuyen_nv_pham_vi=(pv['ket_qua'] == 'chuyen_nhan_vien').mean(),
+                lam_lai_pham_vi=(pv['ket_qua'] == 'lam_lai').mean())
+
+
+def kiem_tra_pilot_plan(duong_dan=DUONG_DAN_PILOT_PLAN):
+    """Kiểm tra trước deadline: yaml.safe_load, không còn dấu hỏi, >= 3 luật dừng đủ bốn vế,
+    đủ trường, số trong file khớp D1, không dùng từ cấm. Trả về danh sách lỗi (rỗng nghĩa là đạt)."""
+    import yaml
+    loi = []
+    with open(duong_dan, encoding='utf-8') as f:
+        text = f.read()
+    plan = yaml.safe_load(text)['pilot']
+    if any('?' in dong for dong in text.splitlines() if not dong.lstrip().startswith('#')):
+        loi.append('còn dấu hỏi ngoài dòng chú thích')
+    for tu in ('production', 'cả đội'):
+        if tu in text.lower():
+            loi.append(f'có từ cấm: {tu}')
+    for truong in ('owner', 'scope', 'assignment', 'rollout', 'primary_metric', 'identifiability',
+                   'stop_rules', 'interim_looks', 'rollback', 'decision_date', 'simulated_inputs'):
+        if truong not in plan:
+            loi.append(f'thiếu trường {truong}')
+    mau_luat = re.compile(r'NẾU .+ TRONG .+ THÌ .+ KHÔNG THÌ .+')
+    luat_dung = [r for r in plan.get('stop_rules', []) if mau_luat.fullmatch(r)]
+    if len(luat_dung) < 3:
+        loi.append(f'chỉ có {len(luat_dung)} luật dừng đủ bốn vế NẾU - TRONG - THÌ - KHÔNG THÌ (cần >= 3)')
+    d1 = cau_d1()
+    pm = plan.get('primary_metric', {})
+    if pm.get('n_per_arm') != d1['e_n6']:
+        loi.append(f"n_per_arm {pm.get('n_per_arm')} khác D1 ({d1['e_n6']})")
+    if abs(pm.get('design_effect', 0) - round(d1['e_de'], 2)) > 0.01:
+        loi.append(f"design_effect {pm.get('design_effect')} khác D1 ({d1['e_de']:.2f})")
+    if pm.get('clusters_per_arm') != 20:
+        loi.append('clusters_per_arm phải là 20')
+    return loi
+
+
 if __name__ == '__main__':
     runs = pd.read_csv('logix_runs.csv')
     reqs = pd.read_csv('logix_requests.csv', keep_default_na=False)
@@ -266,6 +362,23 @@ if __name__ == '__main__':
               f"làm lại {b4['n_lam']} ca = {b4['tien_lam']:,.0f} đ; token+tool {b4['token_tool']:,.0f} đ; "
               f"tổng {b4['tong']:,.0f} đ / {b4['thanh_cong']} = {b4['cps']:,.0f} đ = {b4['so_voi_nv']:.2f}x; "
               f"hoà vốn: xem lại ≤ {b4['hoa_von_phut_xem']:.1f} phút")
-    # TODO CP4 · Nhiệm vụ D: cỡ mẫu.
-    #   from statsmodels.stats.proportion import proportion_effectsize
-    #   from statsmodels.stats.power import NormalIndPower
+
+    # ---- Nhiệm vụ D (CP4) ----
+    d1 = cau_d1()
+    print('\nD1 · cỡ mẫu (baseline 0,70; +5 điểm; alpha 0,05; power 0,8; ICC 0,02)')
+    print(f"   a · chia theo yêu cầu: co_mau(0.70, 0.75) = {d1['a_theo_yc']:,} yêu cầu mỗi nhóm")
+    print(f"   b · theo nhân viên, m = 75: DE = {d1['b_de']:.2f}; n = {d1['b_n']:,} mỗi nhóm "
+          f"→ {d1['b_nguoi_moi_nhom']} người mỗi nhóm, tổng {d1['b_tong_nguoi']} > 40: không đủ người")
+    print(f"   c · 20 nhân viên mỗi nhóm: tối đa 20 / 0,02 = {d1['c_toi_da']:,.0f} < {d1['a_theo_yc']:,}: "
+          f"{'đạt' if d1['c_dat'] else 'không đạt'}")
+    print(f"   d · 6 depot mỗi nhóm: tối đa 6 / 0,02 = {d1['d_toi_da']:,.0f} (không đạt {d1['a_theo_yc']:,})")
+    print(f"   e · mức chênh 6 điểm ({d1['e_n6']} mỗi nhóm), 20 người mỗi nhóm: "
+          f"m >= {d1['e_m']} yêu cầu mỗi người (DE {d1['e_de']:.2f})")
+    print(f"   power thực sự nếu tác động chỉ là 5 điểm, n = {d1['e_n6']}: {d1['e_power_5_diem']:.2f}")
+    mo_lai = ti_le_mo_lai_hien_tai(reqs)
+    print(f"D3 · tỉ lệ mở lại 7 ngày hiện tại: toàn mẫu {mo_lai['toan_mau'] * 100:.2f}%, "
+          f"phạm vi noi_dia + hang_nang {mo_lai['pham_vi'] * 100:.2f}% "
+          f"(chuyển nhân viên {mo_lai['chuyen_nv_pham_vi'] * 100:.2f}%, làm lại {mo_lai['lam_lai_pham_vi'] * 100:.2f}%)")
+    if os.path.exists(DUONG_DAN_PILOT_PLAN):
+        loi = kiem_tra_pilot_plan()
+        print('pilot_plan.yaml: ĐẠT' if not loi else 'pilot_plan.yaml: CÓ LỖI → ' + '; '.join(loi))

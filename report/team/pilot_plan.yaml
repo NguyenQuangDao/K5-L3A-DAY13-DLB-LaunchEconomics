@@ -1,38 +1,89 @@
-# KẾ HOẠCH PILOT - Lab 13 LaunchEconomics
-# Người phụ trách: Nguyễn Vũ Thành Long - 2A202603635 (Viết code), Nguyễn Quang Đạo - 2A202603614 (Kiểm số)
-# Nhiệm vụ: D - pilot_plan.yaml
+# Lab 13 · Nhiệm vụ D · Kế hoạch pilot trợ lý hoàn phí LogiX-VN (Gate 2a)
+# Người phụ trách: Nguyễn Vũ Thành Long - 2A202603635 (viết code), Nguyễn Quang Đạo - 2A202603614 (kiểm số)
+# Mọi số cỡ mẫu do src/lab13.py tính (cau_d1, ti_le_mo_lai_hien_tai); chạy python lab13.py trong src/ để kiểm tra lại.
+# Số suy ra từ hai cột _simulated ghi nhãn simulated.
+# Kiểm tra đọc được: python -c "import yaml; yaml.safe_load(open('../report/team/pilot_plan.yaml'))"
+#
+# D1 · Cỡ mẫu (baseline 0,70; mục tiêu +5 điểm; alpha 0,05; power 0,8; ICC 0,02)
+#   a) Chia theo yêu cầu: co_mau(0,70; 0,75) = 1.251 yêu cầu mỗi nhóm
+#   b) Theo nhân viên, m = 75: DE = 1 + 74 x 0,02 = 2,48; n = 1.251 x 2,48 = 3.103 mỗi nhóm, tức 42 người mỗi nhóm, tổng 84 > 40 nhân viên: không đủ người
+#   c) 20 nhân viên mỗi nhóm: cỡ mẫu hiệu dụng tối đa 20 / 0,02 = 1.000 < 1.251: không đạt
+#   d) 6 depot mỗi nhóm: tối đa 6 / 0,02 = 300 < 1.251: không đạt, và chỉ có 6 cụm
+#   e) Mức chênh 6 điểm (859 mỗi nhóm), 20 nhân viên mỗi nhóm: giải 20m / (1 + (m - 1) x 0,02) >= 859, được m >= 299 yêu cầu mỗi người (DE 6,96)
+#
+# D2 · Năm câu kiểm tra "tách được tác động" với cách chia đã chọn (theo nhân viên, 20 + 20)
+#   1. Đối chứng chạy cùng thời gian: có. 20 nhân viên đối chứng làm cùng tuần, cùng depot với nhóm dùng trợ lý.
+#   2. Chia ngẫu nhiên hay do người chọn: ngẫu nhiên. Bốc thăm bằng code với seed ghi trước, phân tầng theo depot.
+#   3. Ảnh hưởng gián tiếp và cách giảm: có rủi ro chia sẻ câu trả lời trong cùng depot; giảm bằng quyền truy cập theo tài khoản và log lượt mở trợ lý theo staff_id.
+#   4. Chỉ số chính, ngưỡng, ngày quyết định đã viết trước: có. Chốt trong file này trước ngày quyết định 2027-01-05 và ngày bắt đầu 2027-01-06.
+#   5. Ít nhất 20 cụm mỗi nhóm: có, đúng 20 nhân viên mỗi nhóm.
+#
+# Đánh đổi đã chấp nhận: chia theo nhân viên 20 + 20 không đủ cỡ mẫu cho mức chênh 5 điểm (tối đa 1.000 < 1.251).
+#   Chấp nhận phát hiện mức chênh 6 điểm, với điều kiện mỗi nhân viên có từ 299 yêu cầu.
+#   Nếu tác động thật chỉ là 5 điểm thì power chỉ còn 0,64 (statsmodels NormalIndPower, n = 859), thấp hơn 0,8.
+#   Giám đốc vận hành ký chấp nhận đánh đổi này trước ngày bắt đầu (điều kiện kiểm tra ngày 2027-01-05).
+#
+# Tỉ lệ mo_lai_trong_7_ngay hiện tại: 4,25% toàn mẫu (51/1.200), 3,97% trong phạm vi noi_dia + hang_nang.
+#   Ngưỡng tuyệt đối 3% sẽ làm pilot dừng ngay tuần đầu, nên dùng mức chênh +2 điểm so với đối chứng, kèm trần tuyệt đối 6%.
+#   Các ngưỡng khác cũng đặt sau khi nhìn đợt chạy thử (trong phạm vi): chuyển nhân viên 3,46%, làm lại 4,89%, bỏ qua gợi ý 27,12% toàn mẫu.
+#   Đợt chạy thử không có nhóm đối chứng, nên không viết trợ lý đã nâng chỉ số chính từ 0,70.
 
 pilot:
   owner: "Giám đốc vận hành LogiX-VN"
-  scope: "Chỉ noi_dia và hang_nang (0.22x và 0.69x so với 12,000 đ, simulated); loại quoc_te (1.88x) và doi_tac (0.85x)"
+  scope: "Chỉ noi_dia và hang_nang (0,22x và 0,69x so với 12.000 đ, simulated); loại quoc_te (1,88x, simulated) và doi_tac (0,85x, simulated) nằm ngoài phạm vi pilot"
   assignment:
     unit: "staff"
     control_share: 0.5
     randomized: true
-    randomized_method: "boc_tham bang code voi seed 20270105"
+    randomization_method: "bốc thăm bằng code, seed 20270106 ghi trước ngày bắt đầu"
     stratification: "depot"
-  rollout: [0.10, 0.25, 0.50]   # 4 -> 10 -> 20 nhan vien; chi do chi so chinh tu buoc 0.50
+  rollout: [0.10, 0.25, 0.50]     # 4 -> 10 -> 20 nhân viên dùng trợ lý; bước 0.10 và 0.25 mỗi bước một tuần, chỉ theo dõi an toàn; bước 0.50 chạy hai tuần để đo chỉ số chính
   primary_metric:
-    name: "dong_trong_24h_khong_mo_lai_7_ngay"
+    name: dong_trong_24h_khong_mo_lai_7_ngay
     baseline: 0.70
-    mde: 0.06                   # danh doi da chap nhan: 5 diem -> 6 diem
+    mde: 0.06                     # đánh đổi đã chấp nhận, xem phần chú thích đầu file
     alpha: 0.05
     power: 0.80
-    n_per_arm: 859              # 20 nguoimỗi nhóm * 299 yêu cầu mỗi người
-    design_effect: 6.96
+    n_per_arm: 859                # co_mau(0,70; 0,76); 20 nhân viên x 299 yêu cầu mỗi người
+    design_effect: 6.96           # 1 + (299 - 1) x 0,02
     clusters_per_arm: 20
   secondary_metrics:
-    - name: "ti_le_bo_qua_goi_y"
-      baseline: 0.27
+    - name: ti_le_bo_qua_goi_y
+      baseline: 0.2712            # toàn mẫu: 48/177
       warning_threshold: 0.40
-    - name: "ti_le_loi_liet_khach"
-      baseline: 0.0425
+    - name: ti_le_mo_lai_7_ngay
+      baseline: 0.0397            # phạm vi noi_dia + hang_nang
+      warning_threshold: 0.06     # trần tuyệt đối
+    - name: ti_le_chuyen_nhan_vien
+      baseline: 0.0346            # phạm vi noi_dia + hang_nang
       warning_threshold: 0.07
+    - name: ti_le_lam_lai
+      baseline: 0.0489            # phạm vi noi_dia + hang_nang
+      warning_threshold: 0.07
+    - name: chi_phi_moi_viec_thanh_cong
+      baseline_simulated: 3414    # đồng, phạm vi noi_dia + hang_nang, chưa cộng chi phí cố định, simulated
+      warning_threshold_simulated: 8000
+  identifiability:
+    concurrent_control: "Có: 20 nhân viên đối chứng làm cùng tuần, cùng depot với nhóm dùng trợ lý"
+    spillover_risk: "Có thể chia sẻ câu trả lời trong cùng depot; giảm bằng quyền truy cập theo tài khoản và log lượt mở trợ lý theo staff_id"
+    predeclared: "Có: chỉ số chính, ngưỡng, luật dừng và ngày quyết định chốt trong file này trước ngày bắt đầu"
   stop_rules:
-    - "NẾU mở lại 7 ngày của nhóm trợ lý cao hơn đối chứng >= 2 điểm hoặc vượt 6%, hoặc có >= 1 ca hoàn trùng TRONG 3 ngày liên tiếp THÌ Giám đốc vận hành tắt trợ lý trong 30 phút KHÔNG THÌ không được sang bước rollout tiếp"
-    - "NẾU chi phí mỗi việc thành công > 8,000 đ TRONG 2 tuần liên tiếp THÌ PM thu hẹp về noi_dia và giới hạn 2 lần chạy KHÔNG THÌ không được mở hang_nang"
-    - "NẾU tỉ lệ bỏ qua gợi ý > 40% TRONG 1 tuần THÌ Trưởng nhóm CSKH phỏng vấn 5 nhân viên trong 3 ngày KHÔNG THÌ không được chuyển bước rollout"
-    - "NẾU tỉ lệ chuyển nhân viên > 20% TRONG 1 tuần THÌ PM rà lại quy trình chuyển giao và giới hạn 2 lần chạy KHÔNG THÌ không được mở rộng phạm vi"
+    - "NẾU tỉ lệ mở lại 7 ngày của nhóm dùng trợ lý cao hơn nhóm đối chứng từ 2 điểm trở lên, hoặc vượt trần tuyệt đối 6% TRONG 1 tuần liên tục THÌ Giám đốc vận hành tắt trợ lý trong 30 phút bằng cờ tắt KHÔNG THÌ không được sang bước rollout tiếp theo và không được bật lại khi chưa có biên bản nguyên nhân"
+    - "NẾU có từ 1 ca hoàn tiền trùng (cùng idempotency_key ghi sổ hai lần) hoặc từ 1 ca audit_sample_checked lệch tiền TRONG bất kỳ cửa sổ 3 ngày THÌ Giám đốc vận hành tắt trợ lý trong 30 phút KHÔNG THÌ không được hoàn tiền tự động trở lại cho tới khi Kế toán trưởng xác nhận đã sửa khoá chống trùng"
+    - "NẾU chi phí mỗi việc thành công (cùng công thức A2, phút xem lại và làm lại đo thật) vượt 8.000 đ TRONG 2 tuần liên tiếp THÌ PM trợ lý hoàn phí thu hẹp về noi_dia và đặt giới hạn 2 lần chạy trong 5 ngày làm việc KHÔNG THÌ không được mở hang_nang"
+    - "NẾU tỉ lệ bỏ qua gợi ý (sua cộng bo) vượt 40% TRONG 1 tuần THÌ Trưởng nhóm CSKH phỏng vấn 5 nhân viên trong 3 ngày KHÔNG THÌ không được chuyển sang bước rollout tiếp theo"
+    - "NẾU tỉ lệ chuyển nhân viên vượt 7% hoặc tỉ lệ làm lại vượt 7% TRONG 1 tuần THÌ PM trợ lý hoàn phí rà 20 trace lỗi và đặt giới hạn 2 lần chạy trong 5 ngày làm việc KHÔNG THÌ không được mở rộng phạm vi hay tăng bước rollout"
+  interim_looks: "chỉ kiểm tra chỉ số an toàn (mở lại 7 ngày, hoàn trùng) hằng ngày; không dừng sớm vì chỉ số chính để giữ alpha 0,05"
+  rollback: "Giám đốc vận hành bấm cờ tắt, hiệu lực trong 30 phút; khách được phục vụ bằng luồng nhân viên tự làm; yêu cầu đang xử lý chuyển cho nhân viên cùng depot"
+  decision_date: "2027-01-05"     # ngày quyết định bắt đầu pilot (kiểm tra các điều kiện Go có điều kiện), chốt trước ngày bắt đầu
+  start_date: "2027-01-06"
+  end_date: "2027-02-02"          # bước 0.50 từ 2027-01-20, kéo dài hai tuần; khoảng 31 yêu cầu trong phạm vi mỗi nhân viên mỗi ngày (1.500 / 40 x 82%), nên 14 ngày đủ 299 yêu cầu
+  readout_date: "2027-02-03"      # đọc kết quả chỉ số chính sau khi bước 0.50 kết thúc
+  simulated_inputs:
+    - phut_xem_lai_simulated
+    - phut_lam_lai_simulated
+    - chi_phi_moi_viec_thanh_cong (tính từ hai cột phút simulated)
+    - baseline 0,70 và ICC 0,02 (số cho sẵn của lab)
   events:
     - refund_request_created
     - agent_run_completed
@@ -44,43 +95,21 @@ pilot:
     - ticket_closed
     - ticket_reopened
     - audit_sample_checked
-  identifiability:
-    - Mỗi staff_id chỉ thuộc 1 nhóm (control/treatment)
-    - Mỗi request_id chỉ thuộc 1 staff_id
-    - Trace_id ghi nhận full journey của yêu cầu
-  interim_looks:
-    - day: 3
-      threshold: 0.50
-      decision: "tiep_tuc / dieu_chinh"
-    - day: 7
-      threshold: 0.75
-      decision: "tiep_tuc / dung / dieu_chinh"
-    - day: 14
-      threshold: 0.90
-      decision: "tiep_tuc / dung / go"
-  rollback:
-    - "Giám đốc vận hành bấm cờ tắt, hiệu lực 30 phút"
-    - "Khách được phục vụ bằng luồng nhân viên tự làm"
-    - "Tất cả request đang xử lý được chuyển sang nhân viên"
-  simulated_inputs:
-    - phut_xem_lai_simulated
-    - phut_lam_lai_simulated
-  decision_date: "2027-01-05"
-  start_date: "2027-01-06"
-  end_date: "2027-01-20"
   metrics_to_track:
     primary:
-      name: "dong_trong_24h_khong_mo_lai_7_ngay"
-      definition: "dong_trong_24h == 1 AND mo_lai_trong_7_ngay == 0"
+      name: dong_trong_24h_khong_mo_lai_7_ngay
+      definition: "dong_trong_24h bằng 1 và mo_lai_trong_7_ngay bằng 0, chia tổng số yêu cầu"
     secondary:
-      - name: "chi_phi_mo_viec_thanh_cong"
-        definition: "(token + tool + xem_lai + lam_lai) / thanh_cong"
-      - name: "ti_le_lam_lai"
-        definition: "lam_lai / so_lan_chay"
-      - name: "ti_le_xem_lai"
-        definition: "duoc_xem_lai / so_lan_chay"
+      - name: chi_phi_moi_viec_thanh_cong
+        definition: "(token + tool + xem lại + làm lại) chia số yêu cầu có ket_qua là thanh_cong"
+      - name: ti_le_lam_lai
+        definition: "số yêu cầu có ket_qua là lam_lai chia tổng số yêu cầu"
+      - name: ti_le_xem_lai
+        definition: "số yêu cầu có duoc_xem_lai bằng 1 chia tổng số yêu cầu"
   sample_calculation:
-    - chia_theo_yc: "co_mau(0.70, 0.75) = 1,251 yeu cau moi nhom"
-    - chia_theo_nv_20_nguoi: "gioi han c / ICC = 20 / 0.02 = 1,000 < 1,251: khong dat"
-    - chia_theo_yc_20_nguoi: "m >= 299 yeu cau moi nguoi (DE 6.96)"
-    - chon_phuong_an: "Chia theo staff, 20 + 20, chap nhan muc chenh 6 diem (power 0.64 muc 5 diem)"
+    d1_a_theo_yeu_cau: 1251
+    d1_b_theo_nhan_vien_m75: {design_effect: 2.48, n_per_arm: 3103, nguoi_moi_nhom: 42, tong_nguoi: 84, ket_luan: "không đủ người"}
+    d1_c_20_nhan_vien_moi_nhom: {toi_da: 1000, ket_luan: "không đạt"}
+    d1_d_6_depot_moi_nhom: {toi_da: 300, ket_luan: "không đạt"}
+    d1_e_muc_chenh_6_diem: {n_per_arm: 859, m_toi_thieu: 299, design_effect: 6.96}
+    power_neu_tac_dong_that_la_5_diem: 0.64
