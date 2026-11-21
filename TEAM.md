@@ -36,6 +36,27 @@ Ví dụ: `report/team/20241234_NguyenVanAn.md`.
 
 Sao chép mục dưới đây cho từng thành viên.
 
+## NguyễnVũThànhLong-2A202603635
+
+### Phần việc phụ trách
+
+- CP1: Người viết code (A1, `mo_hinh`, A3, A4)
+- CP2: Viết code B1-B4 trong `src/lab13.py` và bảng B1-B4; kiểm số
+- CP4: Code D1 và `pilot_plan.yaml`
+
+### Đóng góp cụ thể
+
+- Viết ba hàm A1 (ba phép thử ĐẠT), `mo_hinh`, bảng A2, A3, A4: chi phí mỗi việc thành công 4.472 đ [simulated], gấp 16,3 lần hoá đơn token
+- Viết code độ nhạy B1-B4: xếp hạng làm lại > xem lại > lương; giới hạn 2 lần rẻ nhất cho công ty; xem lại 100% là 11.743 đ = 0,98× [simulated]
+- Viết code D1 (1.251 · 3.103 · 1.000 · 300 · 299, power 0,64) và `kiem_tra_pilot_plan()`; viết lại `pilot_plan.yaml` với năm luật dừng đủ bốn vế
+- Khôi phục bảng A1 và A4 bị ghi đè, xử lý xung đột `lab13.py`
+
+### Bằng chứng
+
+- Commit `71e2be4`, `31bd49c` (CP1), `f531cc7` (CP2), `49ff94f` (CP4)
+- `src/lab13.py`, `report/team/bang_chi_phi.md`, `report/team/pilot_plan.yaml`
+- Báo cáo cá nhân: `report/team/2A202603635_NguyenVuThanhLong.md`
+
 ## NguyễnQuangĐạo-2A202603614
 
 ### Phần việc phụ trách
