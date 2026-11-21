@@ -1,6 +1,6 @@
 # Báo cáo nhóm
 
-Báo cáo ngắn. Số liệu chi tiết nằm trong các file hồ sơ; ở đây chỉ dẫn lại con số chính. Mọi số tính từ cột `_simulated` ghi nhãn [simulated].
+Mọi số tính từ cột `_simulated` ghi nhãn [simulated].
 
 ## 1. Thông tin nhóm
 
@@ -34,7 +34,7 @@ Cách tiếp cận:
 - **A:** ba phép thử A1 ĐẠT (1,20 · 1,25 · 1,25). Chi phí mỗi việc thành công 4.472 đ [simulated], gấp 16,3× [simulated] hoá đơn token + tool chia số yêu cầu (274,7 đ). Chi phí cả hệ thống 5.865 đ/yêu cầu [simulated] = 0,49× [simulated] của 12.000 đ. quoc_te 1,88× [simulated] và doi_tac 0,85× [simulated] bị loại khỏi phạm vi.
 - **B:** xếp hạng 1. số ca làm lại (+51,8% [simulated]) · 2. tỉ lệ xem lại (+40,7% [simulated]) · 3. lương (+23,1% [simulated]). Giới hạn 2 lần chạy rẻ nhất cho công ty. Xem lại 100%: 11.743 đ [simulated] = 0,98× [simulated], 12.415 đ [simulated] = 1,03× [simulated] nếu làm lại 15,3 phút/ca [simulated].
 - **C:** đồng thuận 19/20 = 95%; ca 13 thống nhất Giới hạn hệ thống.
-- **D:** 1.251 · 3.103 · 1.000 · 300 · m ≥ 299. Chọn chia theo nhân viên 20 + 20, chấp nhận mức chênh 6 điểm; power 0,64 nếu tác động thật là 5 điểm. 5 luật dừng; đọc kết quả 2027-02-11.
+- **D:** chọn chia theo nhân viên 20 + 20, chấp nhận mức chênh 6 điểm: mỗi nhánh 5.980 yêu cầu thực tế, cỡ mẫu hiệu dụng ≈ 859 (DE 6,96); power 0,64 nếu tác động thật là 5 điểm. 5 luật dừng; đọc kết quả 2027-02-11. Đủ năm câu D1 trong `pilot_plan.yaml`.
 - **E:** chỉ số trong đợt chạy thử: chính 82,83%, dùng 27,12%, an toàn 4,25% (chưa có đối chứng nên chưa kết luận tác động).
 - **Đề xuất:** Go có điều kiện cho pilot noi_dia + hang_nang, kèm các con số bất lợi và 5 điều kiện có vai trò phụ trách, ngày kiểm tra.
 - **Duyệt chéo Gate 2a:** nhóm hội đồng: ... · điểm: ... / 30 · quyết định: ... · câu hỏi và câu trả lời: ... (điền sau buổi duyệt chéo).
@@ -45,19 +45,19 @@ Cách tiếp cận:
 | --- | --- | --- |
 | `python lab13.py` lỗi khi in tiếng Việt trên Windows | `UnicodeEncodeError: 'charmap' codec can't encode character` (console cp1252) | Chạy với `$env:PYTHONIOENCODING = "utf-8"` |
 | Một máy thiếu thư viện, code dừng ở D1 | `ModuleNotFoundError: No module named 'statsmodels'` | Tạo `src/.venv`, `pip install -r requirements.txt`; chạy lại hết, in `pilot_plan.yaml: ĐẠT` |
-| Hai người cùng sửa `ho_so_launch_v0.md` trong cùng khoảng thời gian, bản nháp có số dễ bị trừ điểm (0,37×, "cao hơn baseline 0,70", trạng thái ngoài ba giá trị cho phép) | Commit `5fe928c`, PR #3 | Gộp hai bản về mẫu bảy mục, lấy số đã đối chiếu, review trước khi merge (PR #3) |
+| Hai người cùng sửa `ho_so_launch_v0.md` trong cùng khoảng thời gian, bản nháp có số dễ bị trừ điểm (0,37× [simulated], "cao hơn baseline 0,70", trạng thái ngoài ba giá trị cho phép) | Commit `5fe928c`, PR #3 | Gộp hai bản về mẫu bảy mục, lấy số đã đối chiếu, review trước khi merge (PR #3) |
 | Bản nháp đầu của `bang_loi.md` điền sẵn bộ nhãn 2 trước khi người gắn nhãn 2 gắn, ghi đồng thuận 100% | Commit `5fe928c`, PR #4 | Người gắn nhãn 2 gắn độc lập 20 ca; người gắn nhãn 1 xác nhận bộ nhãn 1 là tự gắn độc lập; ghi đồng thuận thật 19/20 (PR #4) |
-| B4 lệch giữa code và hồ sơ: 16,25 phút/ca (48 ca trong phạm vi) so với 15,3 phút/ca (74 ca toàn mẫu) [simulated] | Commit `d3206b5`, `f531cc7` | Thống nhất 15,3 phút/ca [simulated] ở mọi file từ commit `f531cc7` |
+| B4 lệch giữa code và hồ sơ: 16,25 phút/ca [simulated] (48 ca trong phạm vi) so với 15,3 phút/ca [simulated] (74 ca toàn mẫu) | Commit `d3206b5`, `f531cc7` | Từ `f531cc7`, code dùng 15,3 phút/ca [simulated], khớp kịch bản trong hồ sơ |
 
 ## 6. Tổng hợp đóng góp
 
 | Thành viên | Vai | Đóng góp chính | Bằng chứng |
 | --- | --- | --- | --- |
 | Nguyễn Vũ Thành Long | Người viết code (CP1, CP4), hoàn thiện code CP2 | A1–A4 trong `lab13.py`; hoàn thiện B1–B4 và thống nhất B4; D1 và hàm kiểm tra `pilot_plan.yaml` trong code; hoàn thiện `pilot_plan.yaml` (D1, D2, 5 luật dừng) | Commit `71e2be4`, `31bd49c`, `f531cc7`, `49ff94f` |
-| Nguyễn Quang Đạo | Người viết code CP2, người gắn nhãn 1, kiểm số CP1 | Code B1–B4 bản đầu; bản nháp đầu các file hồ sơ; bộ nhãn 1 (20 ca độc lập) | Commit `5fe928c`, `d3206b5` |
-| Nguyễn Gia Bảo | Người gắn nhãn 2 kiêm giữ hồ sơ, kiểm số | Hồ sơ launch v0 bảy mục; bộ nhãn 2 và bảng lỗi; `chi_so.md`, E1 trong `lab13.py` | PR #3, #4, #8 |
+| Nguyễn Quang Đạo | Người viết code CP2, người gắn nhãn 1, kiểm số CP1 | Code B1–B4 bản đầu; bản nháp đầu các file hồ sơ; bộ nhãn 1 (20 ca độc lập) | Commit `5fe928c`, `d3206b5`; `TEAM.md` (kiểm số CP1); `2A202603614_NguyenQuangDao.md` |
+| Nguyễn Gia Bảo | Người gắn nhãn 2 kiêm giữ hồ sơ, kiểm số | Hồ sơ launch v0 bảy mục; bộ nhãn 2 và bảng lỗi; `chi_so.md`, E1 trong `lab13.py` | PR #3, #4, #8; `2A202603647_NguyenGiaBao.md` (PR #6) |
 
-Chi tiết trong `TEAM.md` và báo cáo cá nhân `report/team/MSSV_HoTen.md` của từng người.
+Chi tiết vai trò và đóng góp xem `TEAM.md`.
 
 ## 7. Hạn chế và hướng cải thiện
 
