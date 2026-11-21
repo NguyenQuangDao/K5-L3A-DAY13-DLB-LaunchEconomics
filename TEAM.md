@@ -2,10 +2,10 @@
 
 ## Thông tin nhóm
 
-- Tên nhóm: LaunchEconomics
+- Tên nhóm: DLB
 - Lớp: L3A
 - Repo nhóm: K5-L3A-DAY13-DLB-LaunchEconomics
-- URL repo, nhánh nộp, commit chốt: [https://github.com/VINUNI/K5-L3A-DAY13-DLB-LaunchEconomics](https://github.com/VINUNI/K5-L3A-DAY13-DLB-LaunchEconomics)
+- URL repo, nhánh nộp, commit chốt: [https://github.com/NguyenQuangDao/K5-L3A-DAY13-DLB-LaunchEconomics](https://github.com/NguyenQuangDao/K5-L3A-DAY13-DLB-LaunchEconomics)
 
 ## Thành viên
 
