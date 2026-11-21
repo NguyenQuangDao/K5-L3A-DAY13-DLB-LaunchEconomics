@@ -37,7 +37,12 @@ Cách tiếp cận:
 - **D:** chọn chia theo nhân viên 20 + 20, chấp nhận mức chênh 6 điểm: mỗi nhánh 5.980 yêu cầu thực tế, cỡ mẫu hiệu dụng ≈ 859 (DE 6,96); power 0,64 nếu tác động thật là 5 điểm. 5 luật dừng; đọc kết quả 2027-02-11. Đủ năm câu D1 trong `pilot_plan.yaml`.
 - **E:** chỉ số trong đợt chạy thử: chính 82,83%, dùng 27,12%, an toàn 4,25% (chưa có đối chứng nên chưa kết luận tác động).
 - **Đề xuất:** Go có điều kiện cho pilot noi_dia + hang_nang, kèm các con số bất lợi và 5 điều kiện có vai trò phụ trách, ngày kiểm tra.
-- **Duyệt chéo Gate 2a:** nhóm hội đồng: ... · điểm: ... / 30 · quyết định: ... · câu hỏi và câu trả lời: ... (điền sau buổi duyệt chéo).
+- **Duyệt chéo Gate 2a:** hội đồng là nhóm PD (L3A), chấm **30/30** (C6 10 · C7 10 · C8 10), quyết định **Go có điều kiện**. Hội đồng tự tính lại từ hai CSV và khớp các số chính. Hội đồng thêm hai điều kiện:
+  - Giám đốc vận hành xác nhận đủ 40 nhân viên đủ điều kiện trước 2027-01-05 (dữ liệu chạy thử chỉ có 20 staff_id ở 6 depot).
+  - Luật "cao hơn đối chứng ≥ 2 điểm" chỉ áp dụng từ bước 0.25; bước 0.10 (4 nhân viên) chỉ dùng luật tuyệt đối · PM trợ lý hoàn phí · sửa `pilot_plan.yaml` trước 2027-01-05.
+  - Ghi chú không trừ điểm: trang hồ sơ dài, mục 6 nên rút gọn.
+  - **Câu hỏi:** nếu chỉ có 20 người đủ điều kiện thì chia thế nào, phát hiện được bao nhiêu điểm, còn Go có điều kiện không? **Nhóm trả lời:** chia 10 + 10, bốc thăm trong từng depot nếu đủ người; trần 500 yêu cầu hiệu dụng mỗi bên < 859 cần cho 6 điểm; mức nhỏ nhất đạt power 80% là 8 điểm (ít nhất 796 yêu cầu mỗi người), power chỉ khoảng 41% nếu tác động thật là 5 điểm. Vì vậy nếu chỉ có 20 người thì No-go cho pilot đo tác động; Giám đốc vận hành xác nhận số người trước 05/01/2027; đủ 40 người thì quay lại Gate 2a.
+- **Nhóm chấm nhóm PD:** 30/30, Go có điều kiện (`phieu_cham.md`).
 
 ## 5. Khó khăn và cách xử lý
 
