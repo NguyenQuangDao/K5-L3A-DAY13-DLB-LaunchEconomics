@@ -11,9 +11,9 @@
 
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
-|   1 | Nguyễn Vũ Thành Long | 2A202603635 | 26ai.longnvt2@vinuni.edu.vn | - | Người viết code (CP1), Người kiểm số (CP2), pilot_plan.yaml (CP4) |
-|   2 | Nguyễn Quang Đạo | 2A202603614 | 26ai.daonq2@vinuni.edu.vn | - | Người viết code (CP2), Người gắn nhãn 1 (CP3), kiểm số (CP1) |
-|   3 | Nguyễn Gia Bảo | 2A202603647 | 26ai.baong5@vinuni.edu.vn | - | Người gắn nhãn 2 (CP3), giữ hồ sơ (CP5), kiểm số (CP4, CP5) |
+|   1 | Nguyễn Vũ Thành Long | 2A202603635 | 26ai.longnvt2@vinuni.edu.vn | [nvl191](https://github.com/nvl191) | Người viết code (CP1), Người kiểm số (CP2), pilot_plan.yaml (CP4) |
+|   2 | Nguyễn Quang Đạo | 2A202603614 | 26ai.daonq2@vinuni.edu.vn | [NguyenQuangDao](https://github.com/NguyenQuangDao) | Người viết code (CP2), Người gắn nhãn 1 (CP3), kiểm số (CP1) |
+|   3 | Nguyễn Gia Bảo | 2A202603647 | 26ai.baong5@vinuni.edu.vn | [Billy3005](https://github.com/Billy3005) | Người gắn nhãn 2 (CP3), giữ hồ sơ (CP5), kiểm số (CP4, CP5) |
 
 Bốn vai của lab:
 
