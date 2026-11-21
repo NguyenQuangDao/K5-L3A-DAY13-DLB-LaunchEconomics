@@ -53,8 +53,8 @@
   - Hoà vốn khi làm lại 9 phút/ca: (12.000 × 900 − 48 × 9 × 2.000 − 224.513) ÷ (948 × 2.000) ≈ 5,1 phút [simulated].
   - Hoà vốn khi làm lại 15,3 phút/ca [simulated]: (12.000 × 900 − 48 × 15,3 × 2.000 − 224.513) ÷ (948 × 2.000) ≈ 4,8 phút [simulated].
   - 15,3 phút/ca [simulated] là trung bình cột `phut_lam_lai_simulated` trên toàn bộ 74 ca `lam_lai` của mẫu; đây là kịch bản dùng trong hồ sơ PR #3: 12.415 đ [simulated] = 1,03× [simulated].
-  - `lab13.py` bản hiện tại lấy trung bình trên 48 ca `lam_lai` trong phạm vi noi_dia + hang_nang: 16,25 phút/ca [simulated] → 12.516 đ [simulated] = 1,04× [simulated].
-- Chênh lệch B4 giữa hồ sơ PR #3 và `lab13.py`: khi đối chiếu hai nguồn (Claude Code đọc code và tính lại), nguyên nhân là phạm vi lấy trung bình phút làm lại: PR #3 dùng 74 ca toàn mẫu, code hiện tại dùng 48 ca trong phạm vi pilot. Cả hai kịch bản đều cho chi phí cao hơn mức nhân viên tự làm (1,03× [simulated] và 1,04× [simulated]) khi phải xem lại 100% và làm lại theo số phút trong dữ liệu, nên kết luận về B4 trong đề xuất không đổi.
+- Chênh lệch B4 đã gặp trong lúc làm: `lab13.py` bản commit `d3206b5` lấy trung bình trên 48 ca `lam_lai` trong phạm vi noi_dia + hang_nang: 16,25 phút/ca [simulated] → 12.516 đ [simulated] = 1,04× [simulated], lệch với hồ sơ PR #3. Khi đối chiếu hai nguồn (Claude Code đọc code và tính lại), nguyên nhân là phạm vi lấy trung bình phút làm lại: 74 ca toàn mẫu so với 48 ca trong phạm vi pilot. Cả hai kịch bản đều cho chi phí cao hơn mức nhân viên tự làm khi phải xem lại 100%, nên kết luận về B4 trong đề xuất không đổi.
+- Từ commit `f531cc7`, `lab13.py` dùng 15,3 phút/ca [simulated] và in 12.415 đ [simulated] = 1,03× [simulated], khớp hồ sơ PR #3.
 - Phát hiện khi chạy lại `lab13.py` trên máy Windows: lỗi `UnicodeEncodeError` khi in tiếng Việt; chạy được sau khi đặt `$env:PYTHONIOENCODING = "utf-8"`.
 
 ## 5. Công cụ AI đã dùng
@@ -83,4 +83,4 @@
   - Ca 13 mình gắn theo hành vi của trợ lý (trả lời chung chung), chưa theo nguyên nhân gốc (yêu cầu ngoài phạm vi). Bài học: hỏi "gốc lỗi ở đâu" trước khi hỏi "trợ lý làm sai gì".
   - Hồ sơ cần nhiều vòng review mới chốt được; lần sau nên thống nhất mẫu với nhóm từ đầu buổi để tránh hai người cùng sửa một file.
   - B1–B4 hiện đã có trong `lab13.py`, nhưng D1 và E1 chưa được in khi chạy; số D1, E1 trong hồ sơ đang dựa trên script tạm và phép tính tay.
-  - Kịch bản B4 chưa thống nhất giữa hồ sơ (15,3 phút/ca [simulated]) và `lab13.py` (16,25 phút/ca [simulated]), chi tiết ở mục 4. Nhóm cần chọn một kịch bản và dùng thống nhất ở mọi file.
+  - Kịch bản B4 từng lệch giữa hồ sơ và `lab13.py` (15,3 so với 16,25 phút/ca [simulated]); nhóm đã thống nhất về 15,3 phút/ca từ commit `f531cc7`, chi tiết ở mục 4. Bài học: đối chiếu code với hồ sơ ngay sau mỗi lần một trong hai thay đổi.
