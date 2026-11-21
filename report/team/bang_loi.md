@@ -8,7 +8,7 @@ Người gắn nhãn 1: Nguyễn Quang Đạo - 2A202603614 · Người gắn nh
 
 Hai cột nhãn giữ nguyên như lúc gắn độc lập, không sửa sau khi so.
 
-Đang chờ xác nhận: (1) người gắn nhãn 1 xác nhận cột "Nhãn người 1" được gắn độc lập trên đúng 20 ca của đề; (2) hai người gắn nhãn chốt nhãn thống nhất cho ca 13.
+Đã xác nhận (21/11/2026): người gắn nhãn 1 xác nhận cột "Nhãn người 1" được tự gắn độc lập trên 20 ca của đề; hai người gắn nhãn đã thống nhất nhãn ca 13.
 
 | Ca | Nhãn người 1 | Nhãn người 2 | Trùng? | Nhãn thống nhất |
 | --: | --- | --- | --- | --- |
@@ -24,7 +24,7 @@ Hai cột nhãn giữ nguyên như lúc gắn độc lập, không sửa sau khi
 | 10 | Ngữ cảnh | Ngữ cảnh | Có | Ngữ cảnh |
 | 11 | Giới hạn hệ thống | Giới hạn hệ thống | Có | Giới hạn hệ thống |
 | 12 | Ngầm | Ngầm | Có | Ngầm |
-| 13 | Giới hạn hệ thống | Hệ thống | Không | Chờ xác nhận (đề xuất: Giới hạn hệ thống) |
+| 13 | Giới hạn hệ thống | Hệ thống | Không | Giới hạn hệ thống |
 | 14 | Do người dùng | Do người dùng | Có | Do người dùng |
 | 15 | Hệ thống | Hệ thống | Có | Hệ thống |
 | 16 | Ngữ cảnh | Ngữ cảnh | Có | Ngữ cảnh |
@@ -39,7 +39,7 @@ Hai cột nhãn giữ nguyên như lúc gắn độc lập, không sửa sau khi
 
 Mỗi ca không trùng một câu. Đồng thuận dưới 80% thì ghi định nghĩa đã viết lại.
 
-- Ca 13 (đề xuất, chờ hai người gắn nhãn xác nhận): gốc lỗi là yêu cầu nằm ngoài phạm vi trợ lý (bảo hiểm của công ty đối tác), nên là Giới hạn hệ thống; việc trợ lý trả lời chung chung thay vì nói rõ mình không xử lý được là việc cần khắc phục, không làm đổi nhãn.
+- Ca 13: gốc lỗi là yêu cầu nằm ngoài phạm vi trợ lý (bảo hiểm của công ty đối tác), nên là Giới hạn hệ thống; việc trợ lý trả lời chung chung thay vì nói rõ mình không xử lý được là việc cần khắc phục, không làm đổi nhãn.
 
 ## Bảng khắc phục cho 5 ca, mỗi loại một ca
 
