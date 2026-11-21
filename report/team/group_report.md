@@ -4,13 +4,9 @@ Báo cáo ngắn, tối đa 2 trang. Số liệu chi tiết nằm trong các fil
 
 ## 1. Thông tin nhóm
 
-- Tên nhóm:
-- Lớp:
+- Tên nhóm: LaunchEconomics
+- Lớp: L3A
 - Thành viên: xem `TEAM.md`
-
-## 2. Mục tiêu và cách tiếp cận
-
-...
 
 ## 3. Giải pháp
 

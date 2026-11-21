@@ -1,7 +1,7 @@
 # HỒ SƠ LAUNCH V0 - Lab 13 LaunchEconomics
 
 **Nhóm:** DLB  
-**Người phụ trách:** Nguyễn Quang Đạo (2A202603614 - Person B)  
+**Người phụ trách:** Nguyễn Gia Bảo - 2A202603647
 **Ngày tạo:** 21/11/2026  
 **Đề xuất:** Go có điều kiện
 

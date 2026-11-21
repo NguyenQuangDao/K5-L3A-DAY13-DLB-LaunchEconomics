@@ -1,7 +1,7 @@
 # CHỈ SỐ VÀ RỦI RO KINH TẾ - Lab 13 LaunchEconomics
 
 **Nhóm:** DLB  
-**Người phụ trách:** Nguyễn Quang Đạo (2A202603614 - Person B)  
+**Người phụ trách:** Nguyễn Gia Bảo - 2A202603647 (Đặc tả), Nguyễn Quang Đạo - 2A202603614 (Kiểm số)
 **Nhiệm vụ:** E - Đặc tả chỉ số, danh sách event, rủi ro kinh tế
 
 ---

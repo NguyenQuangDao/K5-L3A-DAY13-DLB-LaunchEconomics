@@ -1,7 +1,7 @@
 # BẢNG CHI PHÍ - Lab 13 LaunchEconomics
 
 **Nhóm:** DLB  
-**Người phụ trách:** Nguyễn Quang Đạo (2A202603614 - Person B)  
+**Người phụ trách:** Nguyễn Quang Đạo - 2A202603614 (Viết bảng), Nguyễn Gia Bảo - 2A202603647 (Kiểm số)
 **Nhiệm vụ:** A2, A3, B1-B4
 
 ---

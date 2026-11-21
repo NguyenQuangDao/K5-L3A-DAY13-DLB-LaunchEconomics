@@ -1,7 +1,7 @@
 # BẢNG LỖI VÀ CÁCH KHẮC PHỤC - Lab 13 LaunchEconomics
 
 **Nhóm:** DLB  
-**Người phụ trách:** Nguyễn Quang Đạo (2A202603614 - Person B), Nguyễn Quang Đạo (Person C)  
+**Người phụ trách:**  Nguyễn Quang Đạo - 2A202603614 (Người gắn nhãn 1), Nguyễn Gia Bảo - 2A202603647 (Người gắn nhãn 2)  
 **Nhiệm vụ:** C - Gắn nhãn 20 ca, bảng khắc phục
 
 ---

@@ -1,3 +1,7 @@
+# KẾ HOẠCH PILOT - Lab 13 LaunchEconomics
+# Người phụ trách: Nguyễn Vũ Thành Long - 2A202603635 (Viết code), Nguyễn Quang Đạo - 2A202603614 (Kiểm số)
+# Nhiệm vụ: D - pilot_plan.yaml
+
 pilot:
   owner: "Giám đốc vận hành LogiX-VN"
   scope: "Chỉ noi_dia và hang_nang (0.22x và 0.69x so với 12,000 đ, simulated); loại quoc_te (1.88x) và doi_tac (0.85x)"
