@@ -11,9 +11,9 @@
 
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
-|   1 | Nguyễn Vũ Thành Long | 2A202603635 | 26ai.longnvt2@vinuni.edu.vn | - | Người viết code (CP1), Người kiểm số (CP2), pilot_plan.yaml (CP4) |
-|   2 | Nguyễn Quang Đạo | 2A202603614 | 26ai.daonq2@vinuni.edu.vn | - | Người viết code (CP2), Người gắn nhãn 1 (CP3), kiểm số (CP1) |
-|   3 | Nguyễn Gia Bảo | 2A202603647 | 26ai.baong5@vinuni.edu.vn | - | Người gắn nhãn 2 (CP3), giữ hồ sơ (CP5), kiểm số (CP4, CP5) |
+|   1 | Nguyễn Vũ Thành Long | 2A202603635 | 26ai.longnvt2@vinuni.edu.vn | [nvl191](https://github.com/nvl191) | Người viết code (CP1), Người kiểm số (CP2), pilot_plan.yaml (CP4) |
+|   2 | Nguyễn Quang Đạo | 2A202603614 | 26ai.daonq2@vinuni.edu.vn | [NguyenQuangDao](https://github.com/NguyenQuangDao) | Người viết code (CP2), Người gắn nhãn 1 (CP3), kiểm số (CP1) |
+|   3 | Nguyễn Gia Bảo | 2A202603647 | 26ai.baong5@vinuni.edu.vn | [Billy3005](https://github.com/Billy3005) | Người gắn nhãn 2 (CP3), giữ hồ sơ (CP5), kiểm số (CP4, CP5) |
 
 Bốn vai của lab:
 
@@ -46,8 +46,8 @@ Sao chép mục dưới đây cho từng thành viên.
 
 ### Đóng góp cụ thể
 
-- Viết ba hàm A1 (ba phép thử ĐẠT), `mo_hinh`, bảng A2, A3, A4: chi phí mỗi việc thành công 4.472 đ [simulated], gấp 16,3 lần hoá đơn token
-- Viết code độ nhạy B1-B4: xếp hạng làm lại > xem lại > lương; giới hạn 2 lần rẻ nhất cho công ty; xem lại 100% là 11.743 đ = 0,98× [simulated]
+- Viết ba hàm A1 (ba phép thử ĐẠT), `mo_hinh`, bảng A2, A3, A4: chi phí mỗi việc thành công 4.472 đ [simulated], gấp 16,3 lần [simulated] hoá đơn token
+- Viết code độ nhạy B1-B4: xếp hạng làm lại > xem lại > lương; giới hạn 2 lần rẻ nhất cho công ty; xem lại 100% là 11.743 đ [simulated] = 0,98× [simulated]
 - Viết code D1 (1.251 · 3.103 · 1.000 · 300 · 299, power 0,64) và `kiem_tra_pilot_plan()`; viết lại `pilot_plan.yaml` với năm luật dừng đủ bốn vế
 - Khôi phục bảng A1 và A4 bị ghi đè, xử lý xung đột `lab13.py`
 
@@ -77,5 +77,28 @@ Sao chép mục dưới đây cho từng thành viên.
 ### Bằng chứng
 
 - report/team/bang_chi_phi.md có đầy đủ bảng B1-B4
-- report/team/bang_loi.md có hai bộ nhãn, tỉ lệ đồng thuận 100%
+- report/team/bang_loi.md có hai bộ nhãn, tỉ lệ đồng thuận 19/20 = 95% (ca 13 lệch, thống nhất Giới hạn hệ thống; PR #4)
 - Bảng khắc phục 5 ca (mỗi loại 1 ca)
+
+## NguyễnGiaBảo-2A202603647
+
+### Phần việc phụ trách
+
+- Giữ hồ sơ: `report/team/ho_so_launch_v0.md` (bảy mục, đề xuất cuối)
+- CP3: Người gắn nhãn 2 (20 ca độc lập)
+- CP5: `report/team/chi_so.md`, E1 trong `src/lab13.py`; báo cáo nhóm
+- Kiểm số các số đưa vào hồ sơ (CP4, CP5)
+
+### Đóng góp cụ thể
+
+- Gộp hồ sơ launch v0 về mẫu một trang, bảy mục; sửa 0,37× [simulated] thành 0,49× [simulated] (cộng 222 yêu cầu nhân viên làm thay), bỏ câu "cao hơn baseline 0,70"; đề xuất Go có điều kiện kèm con số bất lợi (power 0,64; xem lại 100% → 0,98× [simulated] đến 1,03× [simulated])
+- Gắn nhãn 20 ca độc lập; so với bộ nhãn 1 được 19/20 = 95%; cùng người gắn nhãn 1 thống nhất ca 13 là Giới hạn hệ thống
+- Viết lại `chi_so.md`: E1 có cột công thức, 11 event có `trace_id`, 4 dòng rủi ro kinh tế; thêm hàm `chi_so_e1()` trả tử số và mẫu số, rồi in ba kết quả E1 (994/1.200 · 48/177 · 51/1.200)
+- Sửa ngày đọc kết quả pilot thành 2027-02-11 (đủ cửa sổ mở lại 7 ngày) và luật hoàn trùng theo mã khoản hoàn (bắt được ca 20)
+- Viết `report/team/group_report.md`
+
+### Bằng chứng
+
+- PR #3 (hồ sơ), #4 (bảng lỗi), #6 (báo cáo cá nhân), #8 (CP5), #10 (báo cáo nhóm)
+- `report/team/ho_so_launch_v0.md`, `report/team/bang_loi.md` (cột "Nhãn người 2"), `report/team/chi_so.md`, `report/team/group_report.md`
+- Báo cáo cá nhân: `report/team/2A202603647_NguyenGiaBao.md`
