@@ -31,7 +31,7 @@ Mỗi event có `trace_id` để nối với trace của agent.
 | agent_suggestion_shown | Giao diện nhân viên | staff_id, so_tien_de_xuat, trace_id | Khi gợi ý hiện ra cho nhân viên |
 | staff_review_decision | Nhân viên | quyet_dinh (giu, sua, bo), phut_xem_lai đo thật, trace_id | Khi bấm gửi, sửa hoặc bỏ |
 | staff_rework_completed | Nhân viên | phut_lam_lai đo thật, ly_do, trace_id | Khi làm lại xong |
-| refund_ledger_write | Dịch vụ sổ cái | idempotency_key, so_tien, ket_qua, trace_id | Khi ghi sổ hoàn tiền |
+| refund_ledger_write | Dịch vụ sổ cái | ma_khoan_hoan (mã vận đơn + loại phí cần hoàn, độc lập với idempotency_key), idempotency_key, so_tien, ket_qua, trace_id | Khi ghi sổ hoàn tiền |
 | handoff_to_staff | Agent | reason, tom_tat, trace_id | Khi chuyển cho nhân viên |
 | ticket_closed | Hệ thống ticket | closed_at, trace_id | Khi đóng yêu cầu |
 | ticket_reopened | Khách | reopened_at, reason, trace_id | Khi khách mở lại |
@@ -45,7 +45,7 @@ Mỗi event có `trace_id` để nối với trace của agent.
 - Dùng, tự đề xuất: `agent_suggestion_shown` chia `refund_request_created` có `arm = tro_ly`.
 - An toàn, tự đề xuất: `audit_sample_checked`.
 - Chi phí mỗi việc thành công (luật dừng chi phí): `agent_run_completed` (token, tool), `staff_review_decision` (phút xem lại), `staff_rework_completed` (phút làm lại), `ticket_closed` và `ticket_reopened` (đếm việc thành công).
-- Luật dừng hoàn trùng: `refund_ledger_write` (idempotency_key ghi sổ hai lần). Tỉ lệ chuyển nhân viên: `handoff_to_staff`. Lỗi do người dùng (ca 9): `input_validation_failed`.
+- Luật dừng hoàn trùng: `refund_ledger_write`, đếm số `ma_khoan_hoan` có từ 2 bút toán `ket_qua` ok, dù `idempotency_key` khác nhau hay bị thiếu (bắt được ca 20, lệnh thứ hai không có khoá chống trùng). Tỉ lệ chuyển nhân viên: `handoff_to_staff`. Lỗi do người dùng (ca 9): `input_validation_failed`.
 
 ## E2 · Rủi ro kinh tế
 
@@ -56,7 +56,7 @@ Số lấy từ bảng độ nhạy và B4, A4 trong `bang_chi_phi.md`.
 | Số ca làm lại tăng gấp đôi | Chi phí mỗi việc thành công lên 6.787 đ [simulated], +51,8% [simulated] | Tỉ lệ làm lại theo tuần > 7% (đợt thử 4,89% trong phạm vi), từ `staff_rework_completed` | Rà 20 trace làm lại, đặt giới hạn 2 lần chạy trong 5 ngày làm việc; nếu không giảm thì thu hẹp về noi_dia | PM trợ lý hoàn phí |
 | Phải xem lại 100% kéo dài | 11.743 đ [simulated] = 0,98× [simulated] nếu làm lại 9 phút/ca; 12.415 đ [simulated] = 1,03× [simulated] nếu làm lại 15,3 phút/ca [simulated] như dữ liệu | % yêu cầu được xem lại còn > 50% cuối bước rollout 0.25 (2027-01-19), từ `staff_review_decision` | Giảm xem lại theo bậc khi tỉ lệ sửa + bỏ < 15%; mỗi lần xem lại phải ≤ 5,1 phút [simulated] (làm lại 9 phút/ca) hoặc ≤ 4,8 phút [simulated] (làm lại 15,3 phút/ca) | Trưởng nhóm CSKH |
 | Khối lượng thấp hơn dự kiến | Chi phí cố định 40 triệu/tháng: +1.185 đ/việc ở 45.000 yêu cầu/tháng, +2.370 đ/việc nếu còn một nửa; chi phí mỗi việc thành công trong phạm vi tăng từ 4.599 đ [simulated] lên 5.784 đ [simulated] | Số việc thành công theo tuần < 50% kế hoạch | Không mở rộng pilot; xem lại hợp đồng chi phí cố định | PM trợ lý hoàn phí |
-| Pilot chỉ đủ mẫu cho mức chênh 6 điểm | Power 0,64 nếu tác động thật là 5 điểm: khoảng 36% khả năng không thấy được tác động có thật | Tại ngày đọc kết quả 2027-02-03, chênh lệch quan sát dưới 6 điểm và không có ý nghĩa thống kê | Ký chấp nhận đánh đổi trước 2027-01-05; khi đọc kết quả ghi rõ "chưa thấy chênh 6 điểm" không có nghĩa là "không có tác động", quyết định thêm dựa trên chi phí và chỉ số an toàn | Giám đốc vận hành |
+| Pilot chỉ đủ mẫu cho mức chênh 6 điểm | Power 0,64 nếu tác động thật là 5 điểm: khoảng 36% khả năng không thấy được tác động có thật | Tại ngày đọc kết quả 2027-02-11 (sau khi yêu cầu cuối đủ cửa sổ mở lại 7 ngày), chênh lệch quan sát dưới 6 điểm và không có ý nghĩa thống kê | Ký chấp nhận đánh đổi trước 2027-01-05; khi đọc kết quả ghi rõ "chưa thấy chênh 6 điểm" không có nghĩa là "không có tác động", quyết định thêm dựa trên chi phí và chỉ số an toàn | Giám đốc vận hành |
 
 Ghi chú:
 
