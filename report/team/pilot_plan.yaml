@@ -86,6 +86,7 @@ pilot:
     - baseline 0,70 và ICC 0,02 (số cho sẵn của lab)
   events:
     - refund_request_created
+    - input_validation_failed
     - agent_run_completed
     - agent_suggestion_shown
     - staff_review_decision

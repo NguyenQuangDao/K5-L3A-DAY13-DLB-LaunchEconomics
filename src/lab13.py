@@ -270,6 +270,16 @@ def ti_le_mo_lai_hien_tai(reqs):
                 lam_lai_pham_vi=(pv['ket_qua'] == 'lam_lai').mean())
 
 
+def chi_so_e1(reqs):
+    """Nhiệm vụ E1: tính thử ba chỉ số trên 1.200 yêu cầu, trả về (tử số, mẫu số) cho từng chỉ số.
+    Không dùng cột _simulated nên không cần nhãn simulated."""
+    xem = reqs[reqs['duoc_xem_lai'] == 1]
+    return dict(
+        chinh=(((reqs['dong_trong_24h'] == 1) & (reqs['mo_lai_trong_7_ngay'] == 0)).sum(), len(reqs)),
+        bo_qua_goi_y=(xem['quyet_dinh_xem_lai'].isin(['sua', 'bo']).sum(), len(xem)),
+        an_toan=((reqs['mo_lai_trong_7_ngay'] == 1).sum(), len(reqs)))
+
+
 def kiem_tra_pilot_plan(duong_dan=DUONG_DAN_PILOT_PLAN):
     """Kiểm tra trước deadline: yaml.safe_load, không còn dấu hỏi, >= 3 luật dừng đủ bốn vế,
     đủ trường, số trong file khớp D1, không dùng từ cấm. Trả về danh sách lỗi (rỗng nghĩa là đạt)."""
@@ -382,3 +392,11 @@ if __name__ == '__main__':
     if os.path.exists(DUONG_DAN_PILOT_PLAN):
         loi = kiem_tra_pilot_plan()
         print('pilot_plan.yaml: ĐẠT' if not loi else 'pilot_plan.yaml: CÓ LỖI → ' + '; '.join(loi))
+
+    # ---- Nhiệm vụ E (CP5) ----
+    print('\nE1 · chỉ số trong đợt chạy thử (không có đối chứng, không kết luận tác động)')
+    e1 = chi_so_e1(reqs)
+    for ten, (tu, mau) in (('chính: đóng 24h, không mở lại 7 ngày', e1['chinh']),
+                           ('dùng: bỏ qua gợi ý (sua + bo) / được xem lại', e1['bo_qua_goi_y']),
+                           ('an toàn: mở lại trong 7 ngày', e1['an_toan'])):
+        print(f'   {ten:46s} {tu:>4} / {mau:<5} = {tu / mau * 100:.2f}%')
