@@ -1,51 +1,82 @@
-# Lab 13 · Nhiệm vụ D · Kế hoạch pilot trợ lý hoàn phí LogiX-VN (Gate 2a)
-# Điền mọi chỗ có dấu hỏi. Khi nộp, ngoài các dòng chú thích không còn dấu hỏi nào.
-# Kiểm tra đọc được: python -c "import yaml; yaml.safe_load(open('../report/team/pilot_plan.yaml'))"
-#
-# D1 · Cỡ mẫu (baseline 0,70; mục tiêu +5 điểm; alpha 0,05; power 0,8; ICC 0,02)
-#   a) Chia theo yêu cầu:
-#   b) Theo nhân viên, m = 75:
-#   c) 20 nhân viên mỗi nhóm:
-#   d) 6 depot mỗi nhóm:
-#   e) Mức chênh 6 điểm (859 mỗi nhóm), 20 nhân viên mỗi nhóm:
-#
-# D2 · Năm câu kiểm tra "tách được tác động" với cách chia đã chọn (mỗi câu một dòng):
-#   1. Đối chứng chạy cùng thời gian:
-#   2. Chia ngẫu nhiên hay do người chọn:
-#   3. Ảnh hưởng gián tiếp và cách giảm:
-#   4. Chỉ số chính, ngưỡng, ngày quyết định đã viết trước:
-#   5. Ít nhất 20 cụm mỗi nhóm:
-#
-# Đánh đổi đã chấp nhận (nếu cách chia chưa đạt cả hai điều kiện):
-#
-# Tỉ lệ mo_lai_trong_7_ngay hiện tại và ngưỡng an toàn đã chọn:
-
 pilot:
-  owner: "?"                      # một người có tên vai trò, không ghi "cả đội"
-  scope: "?"                      # loại yêu cầu nào, depot nào; dựa vào kết quả A3
+  owner: "Giám đốc vận hành LogiX-VN"
+  scope: "Chỉ noi_dia và hang_nang (0.22x và 0.69x so với 12,000 đ, simulated); loại quoc_te (1.88x) và doi_tac (0.85x)"
   assignment:
-    unit: "?"                     # request | staff | depot
+    unit: "staff"
     control_share: 0.5
     randomized: true
-  rollout: [0.10, 0.25, 0.50]     # mỗi bước một tuần
+    randomized_method: "boc_tham bang code voi seed 20270105"
+    stratification: "depot"
+  rollout: [0.10, 0.25, 0.50]   # 4 -> 10 -> 20 nhan vien; chi do chi so chinh tu buoc 0.50
   primary_metric:
-    name: dong_trong_24h_khong_mo_lai_7_ngay
+    name: "dong_trong_24h_khong_mo_lai_7_ngay"
     baseline: 0.70
-    mde: 0.05
+    mde: 0.06                   # danh doi da chap nhan: 5 diem -> 6 diem
     alpha: 0.05
     power: 0.80
-    n_per_arm: "?"
-    design_effect: "?"            # 1 nếu chia theo yêu cầu
-    clusters_per_arm: "?"         # để trống nếu chia theo yêu cầu
-  identifiability:
-    concurrent_control: "?"
-    spillover_risk: "?"
-    predeclared: "?"
+    n_per_arm: 859              # 20 nguoimỗi nhóm * 299 yêu cầu mỗi người
+    design_effect: 6.96
+    clusters_per_arm: 20
+  secondary_metrics:
+    - name: "ti_le_bo_qua_goi_y"
+      baseline: 0.27
+      warning_threshold: 0.40
+    - name: "ti_le_loi_liet_khach"
+      baseline: 0.0425
+      warning_threshold: 0.07
   stop_rules:
-    - "NẾU ? TRONG ? THÌ ? KHÔNG THÌ ?"
-    - "NẾU ? TRONG ? THÌ ? KHÔNG THÌ ?"
-    - "NẾU ? TRONG ? THÌ ? KHÔNG THÌ ?"
-  interim_looks: "chỉ kiểm tra chỉ số an toàn"
-  rollback: "?"                   # ai bấm, mất bao lâu, khách được phục vụ bằng gì
-  decision_date: "?"
-  simulated_inputs: ["?"]         # liệt kê mọi con số giả lập đã dùng
+    - "NẾU mở lại 7 ngày của nhóm trợ lý cao hơn đối chứng >= 2 điểm hoặc vượt 6%, hoặc có >= 1 ca hoàn trùng TRONG 3 ngày liên tiếp THÌ Giám đốc vận hành tắt trợ lý trong 30 phút KHÔNG THÌ không được sang bước rollout tiếp"
+    - "NẾU chi phí mỗi việc thành công > 8,000 đ TRONG 2 tuần liên tiếp THÌ PM thu hẹp về noi_dia và giới hạn 2 lần chạy KHÔNG THÌ không được mở hang_nang"
+    - "NẾU tỉ lệ bỏ qua gợi ý > 40% TRONG 1 tuần THÌ Trưởng nhóm CSKH phỏng vấn 5 nhân viên trong 3 ngày KHÔNG THÌ không được chuyển bước rollout"
+    - "NẾU tỉ lệ chuyển nhân viên > 20% TRONG 1 tuần THÌ PM rà lại quy trình chuyển giao và giới hạn 2 lần chạy KHÔNG THÌ không được mở rộng phạm vi"
+  events:
+    - refund_request_created
+    - agent_run_completed
+    - agent_suggestion_shown
+    - staff_review_decision
+    - staff_rework_completed
+    - refund_ledger_write
+    - handoff_to_staff
+    - ticket_closed
+    - ticket_reopened
+    - audit_sample_checked
+  identifiability:
+    - Mỗi staff_id chỉ thuộc 1 nhóm (control/treatment)
+    - Mỗi request_id chỉ thuộc 1 staff_id
+    - Trace_id ghi nhận full journey của yêu cầu
+  interim_looks:
+    - day: 3
+      threshold: 0.50
+      decision: "tiep_tuc / dieu_chinh"
+    - day: 7
+      threshold: 0.75
+      decision: "tiep_tuc / dung / dieu_chinh"
+    - day: 14
+      threshold: 0.90
+      decision: "tiep_tuc / dung / go"
+  rollback:
+    - "Giám đốc vận hành bấm cờ tắt, hiệu lực 30 phút"
+    - "Khách được phục vụ bằng luồng nhân viên tự làm"
+    - "Tất cả request đang xử lý được chuyển sang nhân viên"
+  simulated_inputs:
+    - phut_xem_lai_simulated
+    - phut_lam_lai_simulated
+  decision_date: "2027-01-05"
+  start_date: "2027-01-06"
+  end_date: "2027-01-20"
+  metrics_to_track:
+    primary:
+      name: "dong_trong_24h_khong_mo_lai_7_ngay"
+      definition: "dong_trong_24h == 1 AND mo_lai_trong_7_ngay == 0"
+    secondary:
+      - name: "chi_phi_mo_viec_thanh_cong"
+        definition: "(token + tool + xem_lai + lam_lai) / thanh_cong"
+      - name: "ti_le_lam_lai"
+        definition: "lam_lai / so_lan_chay"
+      - name: "ti_le_xem_lai"
+        definition: "duoc_xem_lai / so_lan_chay"
+  sample_calculation:
+    - chia_theo_yc: "co_mau(0.70, 0.75) = 1,251 yeu cau moi nhom"
+    - chia_theo_nv_20_nguoi: "gioi han c / ICC = 20 / 0.02 = 1,000 < 1,251: khong dat"
+    - chia_theo_yc_20_nguoi: "m >= 299 yeu cau moi nguoi (DE 6.96)"
+    - chon_phuong_an: "Chia theo staff, 20 + 20, chap nhan muc chenh 6 diem (power 0.64 muc 5 diem)"
