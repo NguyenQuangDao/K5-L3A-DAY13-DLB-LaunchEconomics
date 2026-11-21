@@ -28,13 +28,13 @@ Chi phí mỗi việc thành công (**4,472 đ**) gấp **16.3 lần** hoá đơ
 
 Chi phí lớn nhất là **làm lại**, chiếm **51.8%** [simulated], tiếp theo là xem lại **40.7%** [simulated]. Giờ nhân viên (xem lại + làm lại) chiếm **92.5%** tổng chi phí.
 
-Nếu so với nhân viên tự làm (12,000 đ/yc), chi phí trợ lý **0.37×**. Nếu tính cả phần chuyển nhân viên (222 yc không thành công), chi phí cả hệ thống mỗi yc là **5,865 đ = 0.49×**.
+Khi so với nhân viên tự làm (12,000 đ/yc), không dùng trực tiếp 4,472 đ vì con số này chưa tính phần nhân viên làm thay 222 yêu cầu không thành công (148 chuyển nhân viên + 74 làm lại). Chi phí cả hệ thống mỗi yêu cầu là (4,373,585 + 222 × 12,000) / 1,200 = **5,865 đ = 0.49×** của 12,000 đ [simulated].
 
 ---
 
 ## A3 · Tách theo loại yêu cầu [simulated]
 
-| Loại | Số yêu cầu | Tỉ lệ thành công | Lần chạy/yêu cầu | Chi phí mỗi việc thành công | So với 12,000 đ |
+| Loại | Số yêu cầu | Tỉ lệ thành công | Lần chạy/yêu cầu | Chi phí mỗi việc thành công [simulated] | So với 12,000 đ [simulated] |
 |------|------------|-----------------|------------------|----------------------------|----------------|
 | noi_dia | 824 | 95.0% | 1.112 | 2,696 đ | 0.225× |
 | hang_nang | 158 | 74.1% | 1.468 | 8,221 đ | 0.685× |
@@ -54,7 +54,21 @@ Nếu so với nhân viên tự làm (12,000 đ/yc), chi phí trợ lý **0.37×
 
 - **quoc_te** không đáng để trợ lý xử lý: thành công chỉ 27.3%, chạy lại tới 3 lần không giúp (tỉ lệ ok giảm mạnh từ lần 1).
 - **doi_tac** sát ngưỡng (0.85×) và có điều khoản riêng, nên cũng loại khỏi phạm vi pilot.
-- **noi_dia** và **hang_nang** là phạm vi pilot phù hợp (0.23× và 0.69× so với 12,000 đ).
+- **noi_dia** và **hang_nang** là phạm vi pilot phù hợp (0.225× và 0.685× so với 12,000 đ) [simulated].
+
+---
+
+## A4 · Chi phí cố định 40 triệu đ/tháng (phạm vi noi_dia + hang_nang) [simulated]
+
+Chi phí mỗi việc thành công trong phạm vi (chưa cộng cố định): 3,072,513 / 900 = **3,414 đ** [simulated].
+
+| Khối lượng | Việc thành công mỗi tháng | Chi phí cố định mỗi việc | Chi phí mỗi việc thành công + cố định | So với 12,000 đ |
+| --- | ---: | ---: | ---: | ---: |
+| 45,000 yêu cầu/tháng | 33,750 (= 45,000 × 900 ÷ 1,200) | 1,185 đ (= 40,000,000 ÷ 33,750) | 4,599 đ [simulated] (3,414 + 1,185) | 0.38× |
+| Một nửa khối lượng | 16,875 | 2,370 đ | 5,784 đ [simulated] (3,414 + 2,370) | 0.48× |
+
+- Chi phí cố định không đổi kết luận: ở cả hai mức khối lượng, phạm vi noi_dia + hang_nang vẫn rẻ hơn nhân viên tự làm (0.38× và 0.48×) [simulated].
+- Nhưng cố định tăng gấp đôi khi khối lượng giảm một nửa (+1,185 đ → +2,370 đ mỗi việc), nên hồ sơ phải ghi rõ con số đã cộng cố định hay chưa, ở khối lượng nào.
 
 ---
 
